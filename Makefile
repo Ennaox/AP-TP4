@@ -1,9 +1,12 @@
 CC = gcc
-CFLAGS = -O3 -Wall -Wextra -g
+CFLAGS = -O3 -funroll-loops -Wall -Wextra -g
 
 .PHONY: clean all
 
 all: main
+
+bench: main
+	./main 100000
 
 debug: main
 	gbd ./main
@@ -15,10 +18,7 @@ else
 	 ./$< $(BYTES)
 endif
 
-bench: main
-	./bench.sh
-
-main:
+main: main.c
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 
 clean: 
